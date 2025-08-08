@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- StringPrinter 클래스를 Bean으로 등록 -->
+	<bean id="stringPrinter" class="myspring.di.xml.StringPrinter" />
+
+	<!-- ConsolePrinter 클래스를 Bean으로 등록 -->
+	<bean id="consolePrinter" class="myspring.di.xml.ConsolePrinter" />
+	
+	<!-- <property name="firstName" /> => 첫글자는 무조건 소문자로 -->
+	<!-- scope의 default 싱글톤, 스프링 컨테이너당 하나의 Bean 인스턴스만 생성, request는 HTTP 요청마다 새로운 Bean 인스턴스 생성
+	prototype은 요청할 때마다 새로운 Bean 인스턴스를 생성, session은 HTTP 세션 당 하나의 Bean 인스턴스 생성 -->
+	
+	<!-- Hello 클래스를 bean으로 등록 -->
+	<bean id="hello" class="myspring.di.xml.Hello" scope=""> 
+		<!-- setter injection -->
+		<property name="name" value="스프링"/> <!-- name은 Hello 클래스의 setName의 name을, value는 "스프링"이라는 글자가 들어감 -->
+		<property name="printer" ref="stringPrinter"/>
+	</bean>
+</beans>

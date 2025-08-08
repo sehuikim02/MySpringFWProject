@@ -8,9 +8,11 @@ public class Hello {
 	List<String> names;
 
 	public Hello() {
+		System.out.println(this.getClass().getName() + "의 생성자가 호출됨");
 	}
 
 	public Hello(String name, Printer printer) {
+		System.out.println(this.getClass().getName() + "Overloaded 생성자가 호출됨");
 		this.name = name;
 		this.printer = printer;
 	}
@@ -24,10 +26,13 @@ public class Hello {
 	}
 
 	public void setName(String name) {
+		System.out.println(this.getClass().getName() + "setName() 호출됨" + name);
 		this.name = name;
 	}
 
 	public void setPrinter(Printer printer) {
+		System.out.println(this.getClass().getName() + "setPrinter() 호출됨" 
+	+ printer.getClass().getName());
 		this.printer = printer;
 	}
 
@@ -36,7 +41,7 @@ public class Hello {
 	}
 
 	public void print() {
-		this.printer.print(sayHello());
+		this.printer.print(sayHello());	// StringPrinter의 printer() 메소드를 호출
 	}
 
 }
