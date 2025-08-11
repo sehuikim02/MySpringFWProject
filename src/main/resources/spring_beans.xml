@@ -4,7 +4,18 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- values.properties 파일위치를 설정하기  -->
+	<context:property-placeholder location="classpath:values.properties"/>
 
+
+
+	<!-- 전략 2 시작  Bean을 어노테이션으로 선언하고 해당 Bean을 스캐닝하기-->
+	<!-- Component Scanning -->
+	<context:component-scan base-package="myspring.di.annot" />
+	<!-- 전략 2 끝 -->
+	
+	<!-- 전략 1 시작 모든 Bean xml에 설정하기 -->
 	<!-- StringPrinter 클래스를 Bean으로 등록 -->
 	<bean id="stringPrinter" class="myspring.di.xml.StringPrinter" />
 
@@ -15,10 +26,28 @@
 	<!-- scope의 default 싱글톤, 스프링 컨테이너당 하나의 Bean 인스턴스만 생성, request는 HTTP 요청마다 새로운 Bean 인스턴스 생성
 	prototype은 요청할 때마다 새로운 Bean 인스턴스를 생성, session은 HTTP 세션 당 하나의 Bean 인스턴스 생성 -->
 	
-	<!-- Hello 클래스를 bean으로 등록 -->
-	<bean id="hello" class="myspring.di.xml.Hello" scope=""> 
+	<!-- Hello 클래스를 Bean으로 등록 Setter Injection -->
+	<bean id="hello" class="myspring.di.xml.Hello" scope="singleton">
 		<!-- setter injection -->
-		<property name="name" value="스프링"/> <!-- name은 Hello 클래스의 setName의 name을, value는 "스프링"이라는 글자가 들어감 -->
-		<property name="printer" ref="stringPrinter"/>
+		<property name="name" value="${myname11}" />
+		<property name="printer" ref="stringPrinter" />
 	</bean>
+	
+	<!-- Hello 클래스를 Bean으로 등록 Constructor Injection -->
+	<bean id="helloC" class="myspring.di.xml.Hello">
+		<!-- constructor injection -->
+		<constructor-arg index="0" value="${myname12}"  />
+		<constructor-arg index="1" ref="consolePrinter" />
+		
+		<!-- Hello.java의 setNames()를 호출하는 setter injection 설정 -->
+		<property name="names">
+			<list>
+				<value>Java</value>
+				<value>SprintFW</value>
+				<value>SpringBoot</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 전략1 끝 -->
 </beans>
